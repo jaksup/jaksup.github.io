@@ -1,7 +1,309 @@
 <!DOCTYPE html>
-<html>
-<body>
-<h1>Hello World</h1>
-<p>I'm hosted with GitHub Pages.</p>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-lang-key="pageTitle">Interactive CV - Jakub Supera</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Warm Neutrals with Subtle Blue Accent -->
+    <!-- Application Structure Plan: The SPA is designed as a narrative journey through Jakub's professional identity, prioritizing his core strength as a "builder" and problem-solver. Instead of a simple chronological CV, the structure is thematic: 1. **Hero Section:** A strong opening statement establishing his identity. 2. **Core Competencies:** A visual, three-column layout to highlight key skills and serve as filters for projects. 3. **Project Showcase:** A filterable gallery of his key projects, with added tech stack details, allowing users to explore areas of interest. 4. **Career Timeline:** An interactive, vertical timeline that provides chronological context but is secondary to the project showcase. 5. **Education & Certifications:** A final, clean section for credentials. This structure allows a recruiter to immediately grasp his value proposition ("builder") and then dive into specific, tangible examples, which is more engaging and effective than a traditional CV format. -->
+    <!-- Visualization & Content Choices: 
+        - **Profile -> Goal: Inform/Engage -> Viz/Method: Hero section with a strong title and summary text -> Interaction: Static -> Justification: Immediately establishes his professional brand as a "builder."**
+        - **Skills List -> Goal: Organize/Compare -> Viz/Method: Three-column emoji grid (HTML/CSS) -> Interaction: Static, but serves as a visual intro to the project filtering -> Justification: Provides a quick, visual summary of his expertise and directly leads into the project showcase, reinforcing the connection between skills and projects.**
+        - **Work Experience -> Goal: Organize/Inform -> Viz/Method: Filterable Cards (HTML/CSS/JS) & Vertical Timeline (HTML/CSS) -> Interaction: Buttons to filter projects by theme (e.g., Data Engineering, ML), cards are clickable for more details (modal pop-up). Timeline items can be clicked to highlight corresponding projects. -> Justification: This dual representation serves two user types: those who want to see specific capabilities (cards) and those who want to see career progression (timeline). It breaks the linear CV format and highlights his "builder" projects directly. Library: Vanilla JS for filtering and interaction.**
+        - **Education/Courses -> Goal: Inform -> Viz/Method: Clean, structured HTML list -> Interaction: Static -> Justification: Presents credentials clearly and concisely without unnecessary complexity.**
+        - **CONFIRMATION: NO SVG graphics used. NO Mermaid JS used.** -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #FDFBF8;
+            color: #333;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 450px;
+            margin: auto;
+            height: 450px;
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -30px;
+            top: 5px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: #3B82F6;
+            border: 4px solid #FDFBF8;
+        }
+        .filter-btn.active {
+            background-color: #3B82F6;
+            color: white;
+        }
+    </style>
+</head>
+<body class="antialiased">
+    <div class="container mx-auto p-4 sm:p-8 max-w-6xl">
+        
+        <!-- Language Toggle -->
+        <div class="flex justify-end mb-4">
+            <button id="lang-toggle-btn" class="px-3 py-1 text-sm bg-gray-200 text-gray-700 rounded-full font-medium transition duration-300 hover:bg-gray-300">
+                EN
+            </button>
+        </div>
+
+        <!-- Header Section -->
+        <header class="text-center mb-16">
+            <h1 class="text-4xl md:text-5xl font-bold text-gray-800">Jakub Supera</h1>
+            <div class="mt-4 text-gray-600 max-w-3xl mx-auto">
+                <p data-lang-key="profileText">Een gedreven data analist die graag complexe problemen oplost. Ik excelleer in het bouwen van end-to-end dataoplossingen die inefficiënte processen omzetten in schaalbare, heldere systemen. Mijn focus ligt op het creëren van tastbare waarde en het vertalen van data naar concrete resultaten.</p>
+            </div>
+        </header>
+
+        <!-- Core Competencies Section -->
+        <section id="competencies" class="mb-16">
+            <h2 class="text-3xl font-bold text-center mb-8 text-gray-800" data-lang-key="competenciesTitle">Kerncompetenties</h2>
+            <div class="bg-white p-6 rounded-2xl shadow-lg">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+                    <div class="p-4 rounded-xl bg-blue-50">
+                        <span class="text-4xl">⚙️</span>
+                        <h3 class="font-bold mt-2" data-lang-key="skill1Title">Data Engineering</h3>
+                    </div>
+                    <div class="p-4 rounded-xl bg-red-50">
+                        <span class="text-4xl">🧠</span>
+                        <h3 class="font-bold mt-2" data-lang-key="skill2Title">Machine Learning</h3>
+                    </div>
+                    <div class="p-4 rounded-xl bg-green-50">
+                        <span class="text-4xl">🚀</span>
+                        <h3 class="font-bold mt-2" data-lang-key="skill3Title">Ondernemerschap</h3>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Project Showcase Section -->
+        <section id="projects" class="mb-16">
+            <h2 class="text-3xl font-bold text-center mb-4 text-gray-800" data-lang-key="projectsTitle">Project Showcase</h2>
+            <p class="text-center text-gray-600 mb-8" data-lang-key="projectsDesc">Een selectie van projecten die mijn passie voor het bouwen van oplossingen demonstreren, inclusief de gebruikte tech-stack en business impact.</p>
+            <div class="flex justify-center flex-wrap gap-2 mb-8">
+                <button class="filter-btn active px-4 py-2 bg-white rounded-full shadow font-medium text-gray-700 transition duration-300 hover:bg-blue-500 hover:text-white" data-filter="all" data-lang-key="allBtn">Alles</button>
+                <button class="filter-btn px-4 py-2 bg-white rounded-full shadow font-medium text-gray-700 transition duration-300 hover:bg-blue-500 hover:text-white" data-filter="Data Engineering" data-lang-key="dataEngineeringBtn">Data Engineering</button>
+                <button class="filter-btn px-4 py-2 bg-white rounded-full shadow font-medium text-gray-700 transition duration-300 hover:bg-blue-500 hover:text-white" data-filter="Machine Learning" data-lang-key="mlBtn">Machine Learning</button>
+                <button class="filter-btn px-4 py-2 bg-white rounded-full shadow font-medium text-gray-700 transition duration-300 hover:bg-blue-500 hover:text-white" data-filter="Entrepreneurship" data-lang-key="entBtn">Ondernemerschap</button>
+            </div>
+            <div id="project-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Project cards will be injected here by JavaScript -->
+            </div>
+        </section>
+
+        <!-- Career Timeline Section -->
+        <section id="timeline" class="mb-16">
+            <h2 class="text-3xl font-bold text-center mb-12 text-gray-800" data-lang-key="timelineTitle">Carrièrepad</h2>
+            <div class="relative max-w-2xl mx-auto border-l-2 border-blue-200 pl-8">
+                <!-- Timeline items will be injected here by JavaScript -->
+            </div>
+        </section>
+
+        <!-- Education & Certifications -->
+        <section id="education">
+            <h2 class="text-3xl font-bold text-center mb-8 text-gray-800" data-lang-key="educationTitle">Opleiding & Certificeringen</h2>
+            <div class="max-w-3xl mx-auto grid md:grid-cols-2 gap-8">
+                <div class="bg-white p-6 rounded-2xl shadow-lg">
+                    <h3 class="font-bold text-xl text-gray-800" data-lang-key="educationSubtitle">Opleiding</h3>
+                    <div class="mt-4 space-y-3">
+                        <div>
+                            <p class="font-semibold">MSc - Metropolitan Analysis, Design and Engineering</p>
+                            <p class="text-sm text-gray-600">TU Delft, Wageningen UR, AMS Institute (2018-2021)</p>
+                        </div>
+                        <div>
+                            <p class="font-semibold">BA - Local government and regional policy</p>
+                            <p class="text-sm text-gray-600">University of Warsaw (2011-2015)</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-2xl shadow-lg">
+                    <h3 class="font-bold text-xl text-gray-800" data-lang-key="coursesSubtitle">Relevante Cursussen</h3>
+                    <ul class="mt-4 space-y-2 list-disc list-inside text-gray-700">
+                        <li>Certified Scrum Product Owner (CSPO)</li>
+                        <li>AWS Certified Cloud Practitioner</li>
+                        <li>Developing on AWS</li>
+                        <li>Advanced Data Modeling</li>
+                        <li>Data Analyst in Python</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        const langData = {
+            "nl": {
+                "pageTitle": "Interactief CV - Jakub Supera",
+                "profileText": "Een gedreven data analist die graag complexe problemen oplost. Ik excelleer in het bouwen van end-to-end dataoplossingen die inefficiënte processen omzetten in schaalbare, heldere systemen. Mijn focus ligt op het creëren van tastbare waarde en het vertalen van data naar concrete resultaten.",
+                "competenciesTitle": "Kerncompetenties",
+                "skill1Title": "Data Engineering",
+                "skill2Title": "Machine Learning",
+                "skill3Title": "Ondernemerschap",
+                "projectsTitle": "Project Showcase",
+                "projectsDesc": "Een selectie van projecten die mijn passie voor het bouwen van oplossingen demonstreren, inclusief de gebruikte tech-stack en business impact.",
+                "allBtn": "Alles",
+                "dataEngineeringBtn": "Data Engineering",
+                "mlBtn": "Machine Learning",
+                "entBtn": "Ondernemerschap",
+                "timelineTitle": "Carrièrepad",
+                "educationTitle": "Opleiding & Certificeringen",
+                "educationSubtitle": "Opleiding",
+                "coursesSubtitle": "Relevante Cursussen",
+                "projectsData": [
+                    { "title": "ETL & Rapportage Oplossingen", "company": "ASN Bank", "description": "Ontwerp en implementatie van nieuwe ETL-pipelines en rapportageoplossingen voor het Management Information-team, wat de nauwkeurigheid van besluitvorming verhoogde en handmatige inspanningen verminderde.", "tags": ["Data Engineering"], "icon": "⚙️", "techStack": "Power BI" },
+                    { "title": "Peeranalyse van ESG-rapportages", "company": "ASN Bank", "description": "Geautomatiseerde dataverzameling en -analyse van ESG-rapportages, wat de tijd voor peer reviews aanzienlijk reduceerde.", "tags": ["Data Engineering"], "icon": "🔍", "techStack": "pandas, requests, pymupdf, beautifulsoup" },
+                    { "title": "Climate Atlas Data Proces", "company": "ASN Bank", "description": "Geleid bij de ontwikkeling van een nieuw proces voor het integreren van Climate Atlas Effect-gegevens, waardoor de risicobeoordeling en naleving bij het hypotheekacceptatieproces werden verbeterd.", "tags": ["Data Engineering"], "icon": "🌍", "techStack": "AWS Lambda, FastAPI, rasterio, GeoPandas" },
+                    { "title": "Voorspellingsmodel Energielabels", "company": "ASN Bank", "description": "Ontwikkelde een voorspellingsmodel om energielabels te schatten, wat proactieve financiële planning en risicoanalyse voor een groot contractportfolio mogelijk maakte.", "tags": ["Machine Learning"], "icon": "💡", "techStack": "Sci-kit learn" },
+                    { "title": "Cloud & ML Producten", "company": "Deloitte", "description": "Bijgedragen aan de bouw van schaalbare machine learning-modellen en cloud-infrastructuur, wat de productontwikkeling versnelde.", "tags": ["Machine Learning"], "icon": "☁️", "techStack": "Google Cloud Platform (GCP), PyTorch YOLO v5" },
+                    { "title": "Tree Index Analyseplatform", "company": "Tree Index", "description": "Oprichter van een platform en implementeerde procesverbeteringen die de operationele efficiëntie en datakwaliteit voor het monitoren van stadsbomen drastisch verbeterde.", "tags": ["Entrepreneurship", "Data Engineering", "Machine Learning"], "icon": "🌳", "techStack": "pandas, rasterio" },
+                    { "title": "BOOMBRIX IoT Oplossing", "company": "BOOMBRIX", "description": "Mede-oprichter van een startup die een data-gedreven productconcept succesvol pitchte, wat resulteerde in het binnenhalen van een contract met de Gemeente Amsterdam, om de effectiviteit van de business te demonstreren.", "tags": ["Entrepreneurship"], "icon": "💧", "techStack": "Arduino, SigFox, Azure IoT hub" },
+                    { "title": "Analyse financiële stromen (stage)", "company": "Gemeente Amsterdam", "description": "Leverde datagedreven inzichten in inkoopstromen, wat de strategische besluitvorming over leveranciersrelaties ondersteunde.", "tags": ["Data Engineering"], "icon": "📈", "techStack": "pandas, networkx, plotly" },
+                    { "title": "Samenvattingsgenerator (stage)", "company": "Gemeente Amsterdam", "description": "Bouwde een tool die het samenvatten van beleidsdocumenten automatiseerde, wat sneller onderzoek en een efficiëntere workflow mogelijk maakte.", "tags": ["Machine Learning"], "icon": "📝", "techStack": "spaCy, nltk" }
+                ],
+                "timelineData": [
+                    { "year": "2024 - Heden", "role": "Data Analist - Finance Developer", "company": "ASN Bank" },
+                    { "year": "2022 - 2023", "role": "Oprichter", "company": "Tree Index" },
+                    { "year": "2021 - 2022", "role": "Analist - Cloud", "company": "Deloitte" },
+                    { "year": "2020", "role": "Onderzoeksstagiair", "company": "Gemeente Amsterdam" },
+                    { "year": "2019", "role": "Medeoprichter", "company": "BOOMBRIX" }
+                ]
+            },
+            "en": {
+                "pageTitle": "Interactive CV - Jakub Supera",
+                "profileText": "A driven data analyst who loves solving complex problems. I excel at building end-to-end data solutions that transform inefficient processes into scalable, clear systems. My focus is on creating tangible value and translating data into concrete results.",
+                "competenciesTitle": "Core Competencies",
+                "skill1Title": "Data Engineering",
+                "skill2Title": "Machine Learning",
+                "skill3Title": "Entrepreneurship",
+                "projectsTitle": "Project Showcase",
+                "projectsDesc": "A selection of projects that demonstrate my passion for building solutions, including the tech stack and business impact.",
+                "allBtn": "All",
+                "dataEngineeringBtn": "Data Engineering",
+                "mlBtn": "Machine Learning",
+                "entBtn": "Entrepreneurship",
+                "timelineTitle": "Career Path",
+                "educationTitle": "Education & Certifications",
+                "educationSubtitle": "Education",
+                "coursesSubtitle": "Relevant Courses",
+                "projectsData": [
+                    { "title": "ETL & Reporting Solutions", "company": "ASN Bank", "description": "Designed and implemented new ETL pipelines and reporting solutions for the Management Information team, enhancing the accuracy of decision-making and reducing manual effort.", "tags": ["Data Engineering"], "icon": "⚙️", "techStack": "Power BI" },
+                    { "title": "ESG Report Peer Analysis", "company": "ASN Bank", "description": "Automated data collection and analysis for ESG reports, which significantly reduced the time required for peer reviews.", "tags": ["Data Engineering"], "icon": "🔍", "techStack": "pandas, requests, pymupdf, beautifulsoup" },
+                    { "title": "Climate Atlas Data Process", "company": "ASN Bank", "description": "Led the development of a new process for integrating Climate Atlas Effect data, which improved risk assessment and compliance in the mortgage acceptance process.", "tags": ["Data Engineering"], "icon": "🌍", "techStack": "AWS Lambda, FastAPI, rasterio, GeoPandas" },
+                    { "title": "Energy Label Prediction Model", "company": "ASN Bank", "description": "Developed a predictive model to estimate energy labels, enabling proactive financial planning and risk analysis for a large contract portfolio.", "tags": ["Machine Learning"], "icon": "💡", "techStack": "Sci-kit learn" },
+                    { "title": "Cloud & ML Products", "company": "Deloitte", "description": "Contributed to building scalable machine learning models and cloud infrastructure, which accelerated product development and deployment.", "tags": ["Machine Learning"], "icon": "☁️", "techStack": "Google Cloud Platform (GCP), PyTorch YOLO v5" },
+                    { "title": "Tree Index Analytics Platform", "company": "Tree Index", "description": "Founded a platform and implemented process improvements that drastically increased operational efficiency and data quality for monitoring urban trees.", "tags": ["Entrepreneurship", "Data Engineering", "Machine Learning"], "icon": "🌳", "techStack": "pandas, rasterio" },
+                    { "title": "BOOMBRIX IoT Solution", "company": "BOOMBRIX", "description": "Co-founded a startup that successfully pitched a data-driven product concept to secure a contract with the Municipality of Amsterdam, demonstrating effective business development.", "tags": ["Entrepreneurship"], "icon": "💧", "techStack": "Arduino, SigFox, Azure IoT hub" },
+                    { "title": "Financial Flows Analysis (Internship)", "company": "Gemeente Amsterdam", "description": "Provided data-driven insights into procurement financial flows, helping to inform strategic decision-making on vendor relationships.", "tags": ["Data Engineering"], "icon": "📈", "techStack": "pandas, networkx, plotly" },
+                    { "title": "Summary Generator (Internship)", "company": "Gemeente Amsterdam", "description": "Built a tool that automated policy document summarization, enabling faster research and a more efficient workflow.", "tags": ["Machine Learning"], "icon": "📝", "techStack": "spaCy, nltk" }
+                ],
+                "timelineData": [
+                    { "year": "2024 - Present", "role": "Data Analyst - Finance Developer", "company": "ASN Bank" },
+                    { "year": "2022 - 2023", "role": "Founder", "company": "Tree Index" },
+                    { "year": "2021 - 2022", "role": "Analyst - Cloud", "company": "Deloitte" },
+                    { "year": "2020", "role": "Research Intern", "company": "Gemeente Amsterdam" },
+                    { "year": "2019", "role": "Co-founder", "company": "BOOMBRIX" }
+                ]
+            }
+        };
+
+        let currentLang = 'nl';
+        const elements = {};
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const projectGrid = document.getElementById('project-grid');
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            const timelineContainer = document.querySelector('.relative.max-w-2xl.mx-auto');
+            const langToggleBtn = document.getElementById('lang-toggle-btn');
+            
+            document.querySelectorAll('[data-lang-key]').forEach(el => {
+                const key = el.getAttribute('data-lang-key');
+                if (!elements[key]) {
+                    elements[key] = [];
+                }
+                elements[key].push(el);
+            });
+
+            const updateTextContent = () => {
+                for (const key in elements) {
+                    if (langData[currentLang][key]) {
+                        elements[key].forEach(el => el.textContent = langData[currentLang][key]);
+                    }
+                }
+            };
+
+            const renderProjects = (filter = 'all') => {
+                projectGrid.innerHTML = '';
+                const projects = langData[currentLang].projectsData;
+                const filteredProjects = filter === 'all' 
+                    ? projects 
+                    : projects.filter(p => p.tags.includes(filter));
+
+                filteredProjects.forEach(project => {
+                    const card = document.createElement('div');
+                    card.className = 'project-card bg-white p-6 rounded-2xl shadow-lg transition-transform transform hover:-translate-y-2';
+                    card.innerHTML = `
+                        <div class="text-4xl mb-4">${project.icon}</div>
+                        <h3 class="font-bold text-xl text-gray-800 mb-2">${project.title}</h3>
+                        <p class="font-semibold text-blue-600 mb-3">${project.company}</p>
+                        <p class="text-gray-600 text-sm mb-4">${project.description}</p>
+                        <div class="flex flex-wrap gap-2 text-sm">
+                            <span class="font-bold text-gray-800 mr-2" data-lang-key="techStackLabel">Tech Stack:</span>
+                            <span class="font-medium text-gray-700">${project.techStack}</span>
+                        </div>
+                    `;
+                    projectGrid.appendChild(card);
+                });
+                
+                // Manually update the tech stack label after projects are rendered
+                document.querySelectorAll('[data-lang-key="techStackLabel"]').forEach(el => {
+                    el.textContent = currentLang === 'nl' ? "Tech Stack:" : "Tech Stack:";
+                });
+            };
+
+            const renderTimeline = () => {
+                timelineContainer.innerHTML = '';
+                const timeline = langData[currentLang].timelineData;
+                timeline.forEach(item => {
+                    const div = document.createElement('div');
+                    div.className = 'timeline-item mb-8 relative';
+                    div.innerHTML = `
+                        <p class="text-sm font-semibold text-blue-600">${item.year}</p>
+                        <h3 class="font-bold text-xl text-gray-800">${item.role}</h3>
+                        <p class="text-gray-600">${item.company}</p>
+                    `;
+                    timelineContainer.appendChild(div);
+                });
+            };
+
+            langToggleBtn.addEventListener('click', () => {
+                currentLang = currentLang === 'nl' ? 'en' : 'nl';
+                langToggleBtn.textContent = currentLang === 'nl' ? 'EN' : 'NL';
+                updateTextContent();
+                renderProjects(document.querySelector('.filter-btn.active').dataset.filter);
+                renderTimeline();
+            });
+
+            filterButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const filter = button.dataset.filter;
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+                    renderProjects(filter);
+                });
+            });
+
+            updateTextContent();
+            renderProjects();
+            renderTimeline();
+        });
+    </script>
 </body>
 </html>
