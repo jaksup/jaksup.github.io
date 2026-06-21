@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jakub Supera</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+      font-size: 15px;
+      line-height: 1.6;
+      color: #1a1a2e;
+      background: #fff;
+    }
+
+    a { color: #0f528c; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    .container {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* HEADER */
+    header {
+      border-bottom: 3px solid #1a1a2e;
+      padding: 48px 0 32px;
+    }
+
+    header h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #1a1a2e;
+      letter-spacing: -0.5px;
+    }
+
+    header .contact {
+      margin-top: 8px;
+      font-size: 13px;
+      color: #606070;
+    }
+
+    header .contact a { color: #606070; }
+    header .contact span { margin: 0 8px; }
+
+    /* SECTIONS */
+    section {
+      padding: 40px 0;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    section:last-child { border-bottom: none; }
+
+    .section-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      color: #0f528c;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+
+    /* PROFILE */
+    .profile p {
+      font-size: 15px;
+      color: #2d2d3e;
+      max-width: 660px;
+    }
+
+    /* EXPERIENCE */
+    .job { margin-bottom: 28px; }
+    .job:last-child { margin-bottom: 0; }
+
+    .job-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 4px;
+    }
+
+    .job-title {
+      font-weight: 600;
+      font-size: 15px;
+      color: #1a1a2e;
+    }
+
+    .job-company {
+      color: #0f528c;
+      font-weight: 500;
+    }
+
+    .job-meta {
+      font-size: 12px;
+      color: #606070;
+      white-space: nowrap;
+    }
+
+    .job-location {
+      font-size: 12px;
+      color: #9ca3af;
+      font-style: italic;
+      margin-bottom: 6px;
+    }
+
+    .job ul {
+      list-style: none;
+      padding: 0;
+      margin-top: 6px;
+    }
+
+    .job ul li {
+      padding-left: 14px;
+      position: relative;
+      font-size: 14px;
+      color: #374151;
+      margin-bottom: 4px;
+    }
+
+    .job ul li::before {
+      content: "–";
+      position: absolute;
+      left: 0;
+      color: #9ca3af;
+    }
+
+    /* SKILLS */
+    .skills-grid {
+      display: grid;
+      gap: 8px;
+    }
+
+    .skill-row {
+      display: grid;
+      grid-template-columns: 160px 1fr;
+      font-size: 14px;
+      gap: 12px;
+    }
+
+    .skill-label {
+      font-weight: 600;
+      color: #1a1a2e;
+    }
+
+    .skill-value { color: #374151; }
+
+    /* EDUCATION */
+    .edu { margin-bottom: 20px; }
+    .edu:last-child { margin-bottom: 0; }
+    .edu-degree { font-weight: 600; font-size: 15px; }
+    .edu-school { color: #0f528c; }
+    .edu-year { font-size: 12px; color: #606070; }
+    .edu-thesis {
+      font-size: 13px;
+      color: #606070;
+      font-style: italic;
+      margin-top: 4px;
+      max-width: 640px;
+    }
+
+    /* CERTS */
+    .cert-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      font-size: 14px;
+      padding: 6px 0;
+      border-bottom: 1px solid #f3f4f6;
+      gap: 12px;
+    }
+
+    .cert-row:last-child { border-bottom: none; }
+    .cert-name { color: #1a1a2e; }
+    .cert-date { color: #9ca3af; font-size: 12px; white-space: nowrap; }
+
+    /* LANGUAGES */
+    .lang-row { display: flex; gap: 32px; }
+    .lang strong { color: #1a1a2e; }
+    .lang span { color: #606070; font-size: 13px; }
+
+    /* LINKS */
+    .project-links {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-top: 8px;
+    }
+
+    .project-link {
+      font-size: 13px;
+      color: #0f528c;
+      border: 1px solid #0f528c;
+      padding: 4px 12px;
+      border-radius: 4px;
+    }
+
+    .project-link:hover {
+      background: #0f528c;
+      color: #fff;
+      text-decoration: none;
+    }
+
+    footer {
+      padding: 24px 0;
+      font-size: 12px;
+      color: #9ca3af;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+
+  <header>
+    <h1>Jakub Supera</h1>
+    <div class="contact">
+      <a href="mailto:jakub.supera@gmail.com">jakub.supera@gmail.com</a>
+      <span>·</span>
+      <a href="https://linkedin.com/in/supera" target="_blank">linkedin.com/in/supera</a>
+      <span>·</span>
+      <a href="https://github.com/jaksup" target="_blank">github.com/jaksup</a>
+      <span>·</span>
+      Warsaw (from August 2026)
+      <span>·</span>
+      +31 636 158 260
+    </div>
+  </header>
+
+  <section class="profile">
+    <div class="section-label">Profile</div>
+    <p>I build products at the intersection of business needs, technology, and regulatory requirements. I founded Tree Index — a platform processing ESA satellite data that reached 80 users in 13 countries within 2 weeks of launch. I co-founded BOOMBRIX: an IoT system correlating tree health data with satellite NDVI indices, which ended with a framework agreement with the City of Amsterdam. Over the past two years I have been gaining experience in a highly regulated banking environment, developing solutions at the intersection of legacy systems and modern frameworks. Returning to Warsaw in August 2026.</p>
+  </section>
+
+  <section>
+    <div class="section-label">Experience</div>
+
+    <div class="job">
+      <div class="job-header">
+        <span><span class="job-title">Data Engineer / Data Analyst</span> · <span class="job-company">ASN Bank</span></span>
+        <span class="job-meta">Aug 2024 – Jul 2026</span>
+      </div>
+      <div class="job-location">Utrecht, Netherlands</div>
+      <ul>
+        <li>7+ data processing pipelines in production: financial reporting, risk, ESG, energy certification, Oracle EBS integration — directly unblocked a bank-wide infrastructure modernisation programme.</li>
+        <li>AWS Lambda fetching climate risk data (DORA/ESG) for the full mortgage portfolio + real-time API integrating climate exposure into the lending process.</li>
+      </ul>
+    </div>
+
+    <div class="job">
+      <div class="job-header">
+        <span><span class="job-title">Founder / Data Engineer</span> · <span class="job-company">Tree Index</span></span>
+        <span class="job-meta">Dec 2022 – Dec 2023</span>
+      </div>
+      <div class="job-location">Amsterdam, Netherlands</div>
+      <ul>
+        <li>Designed end-to-end architecture for processing ESA satellite data: data ingestion → Machine Learning pipeline (Prophet, anomaly detection) → online visualisation portal.</li>
+        <li>80 users in 13 countries within 2 weeks of launch — no marketing budget.</li>
+        <li>Selected to present at Copernicus Masters Prize (ESA), Netherlands, August 2023.</li>
+      </ul>
+      <div class="project-links">
+        <a class="project-link" href="https://github.com/jaksup/tree-index" target="_blank">github.com/jaksup/tree-index</a>
+      </div>
+    </div>
+
+    <div class="job">
+      <div class="job-header">
+        <span><span class="job-title">Business Analyst / Data Analyst</span> · <span class="job-company">bol.com</span></span>
+        <span class="job-meta">Jul – Nov 2022</span>
+      </div>
+      <div class="job-location">Utrecht, Netherlands</div>
+      <ul>
+        <li>Product data analytics across 56M SKUs (BigQuery/SQL); data quality framework (Great Expectations) detecting near-zero fill attributes — foundation for simplifying the data model.</li>
+      </ul>
+    </div>
+
+    <div class="job">
+      <div class="job-header">
+        <span><span class="job-title">Analyst / Cloud</span> · <span class="job-company">Deloitte</span></span>
+        <span class="job-meta">Dec 2021 – Jun 2022</span>
+      </div>
+      <div class="job-location">Amsterdam, Netherlands</div>
+      <ul>
+        <li>GCP cloud migration support; managing GCP certification paths for 15 analysts.</li>
+      </ul>
+    </div>
+
+    <div class="job">
+      <div class="job-header">
+        <span><span class="job-title">Research Intern / Data Engineer</span> · <span class="job-company">City of Amsterdam</span></span>
+        <span class="job-meta">Jan – Aug 2020</span>
+      </div>
+      <div class="job-location">Amsterdam, Netherlands</div>
+      <ul>
+        <li>NLP tool (NLTK) for automatic processing of public policy documents; network analysis of public procurement data (NetworkX).</li>
+      </ul>
+    </div>
+
+    <div class="job">
+      <div class="job-header">
+        <span><span class="job-title">Co-founder / IoT & Data Engineer</span> · <span class="job-company">BOOMBRIX</span></span>
+        <span class="job-meta">2018 – 2019</span>
+      </div>
+      <div class="job-location">Amsterdam, Netherlands</div>
+      <ul>
+        <li>Startup founded as part of a university entrepreneurship module — from idea through internal pitch, application to Startup in Residence Amsterdam, hardware iterations, pilot, and Demo Day.</li>
+        <li>Built IoT system end-to-end: 10 Arduino units with GSM transmission, collecting tree health data correlated with satellite NDVI indices. Result: framework agreement with the City of Amsterdam.</li>
+      </ul>
+      <div class="project-links">
+        <a class="project-link" href="https://github.com/jaksup/boombrix" target="_blank">github.com/jaksup/boombrix</a>
+      </div>
+    </div>
+
+    <div class="job">
+      <div class="job-header">
+        <span><span class="job-title">Analyst</span> · <span class="job-company">Laboratorium EE (aplikacje.gov.pl)</span></span>
+        <span class="job-meta">Sep 2016 – Dec 2017</span>
+      </div>
+      <div class="job-location">Warsaw, Poland</div>
+      <ul>
+        <li>R&D of SaaS platform for 500,000+ public administration employees; specification of IAM, SSO, and API modules.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-label">Education</div>
+
+    <div class="edu">
+      <div>
+        <span class="edu-degree">MSc Metropolitan Analysis, Design and Engineering</span>
+        · <span class="edu-school">TU Delft</span>
+        · <span class="edu-year">2018 – 2021</span>
+      </div>
+      <div class="edu-thesis">Research project & master thesis: "Limiting amount of information can increase chances for successful collaboration — Network pictures in the procurement of innovation context." Case study: City of Amsterdam CTO Innovation Team.</div>
+    </div>
+
+    <div class="edu">
+      <span class="edu-degree">BA Local Government and Regional Policy</span>
+      · <span class="edu-school">University of Warsaw</span>
+      · <span class="edu-year">2011 – 2015</span>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-label">Technical Skills</div>
+    <div class="skills-grid">
+      <div class="skill-row"><span class="skill-label">Languages</span><span class="skill-value">Python (pandas, NumPy, GeoPandas), SQL, Bash</span></div>
+      <div class="skill-row"><span class="skill-label">Cloud</span><span class="skill-value">GCP (BigQuery, Cloud Functions), AWS (Lambda, S3) — AWS Cloud Practitioner</span></div>
+      <div class="skill-row"><span class="skill-label">Data Engineering</span><span class="skill-value">ETL/ELT, Great Expectations, Stonebranch, SAS, Oracle EBS/Fusion</span></div>
+      <div class="skill-row"><span class="skill-label">ML / Geospatial</span><span class="skill-value">Prophet, NLTK, NetworkX, scikit-learn, LlamaIndex/RAG, GeoPandas, OpenStreetMap</span></div>
+      <div class="skill-row"><span class="skill-label">Tools</span><span class="skill-value">Git, Jira, Power BI, Agile/Scrum (CSPO)</span></div>
+      <div class="skill-row"><span class="skill-label">Domains</span><span class="skill-value">Satellite technologies, ESG/climate, finance, public sector, e-commerce</span></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-label">Certifications</div>
+    <div class="cert-row"><span class="cert-name">AWS Certified Cloud Practitioner — Amazon Web Services</span><span class="cert-date">Feb 2025</span></div>
+    <div class="cert-row"><span class="cert-name">Certified Scrum Product Owner (CSPO) — Scrum Alliance</span><span class="cert-date">Oct 2022</span></div>
+    <div class="cert-row"><span class="cert-name">Associate Data Engineer — DataCamp</span><span class="cert-date">Jul 2025</span></div>
+  </section>
+
+  <section>
+    <div class="section-label">Languages</div>
+    <div class="lang-row">
+      <div class="lang"><strong>Polish</strong> <span>(native)</span></div>
+      <div class="lang"><strong>English</strong> <span>(C2)</span></div>
+      <div class="lang"><strong>Dutch</strong> <span>(C1)</span></div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container" style="padding:0">jakub.supera@gmail.com</div>
+  </footer>
+
+</div>
+
+</body>
+</html>
